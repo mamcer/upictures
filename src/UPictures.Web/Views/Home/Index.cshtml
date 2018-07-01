@@ -1,0 +1,34 @@
+﻿@model IEnumerable<IndexViewModel>
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+<br/>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th># Pictures</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var album in Model)
+    {
+        <tr>
+            <td>
+                <a href="@Url.Action("View", "Album", new {id = album.Id}, null)">
+                    @*                    <figure>*@
+                    @*                        <img src="~/images/thumbnail/@album.Name/@album.ThumbnailFileName" alt="@album.Name" />*@
+                    @*                        <figcaption>@album.Name [@album.Pictures.Count()]</figcaption>*@
+                    @*                    </figure>*@
+                    @album.Name
+                </a>
+            </td>
+            <td>
+                @album.PictureCount
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

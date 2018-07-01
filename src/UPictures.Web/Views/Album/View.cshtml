@@ -1,0 +1,32 @@
+﻿@model AlbumViewModel
+
+@{
+    ViewData["Title"] = "Album";
+}
+
+<br/>
+
+<table class="table table-bordered">
+    @{var index = 0;}
+    @foreach (var picture in Model.Pictures)
+    {
+        if (index == 0)
+        {
+            @:<tr>
+        }
+        index += 1;
+        <td>
+           <a href="@Url.Action("View", "Picture", new { id = picture.Id })">
+              <picture>
+                 <source src="~/images/thumbnail/@Model.Name/@picture.FileName" />
+                 <img src="~/images/thumbnail/@Model.Name/@picture.FileName" />
+              </picture>
+           </a>
+        </td>
+        if (index == 7)
+        {
+           @:</tr>
+           index = 0;
+        }
+    }
+</table>

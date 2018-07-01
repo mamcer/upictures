@@ -1,0 +1,46 @@
+﻿@model PictureViewModel
+
+<br/>
+
+<p>
+    @Html.ActionLink("Previous", "Previous", new {id = Model.Id}, new {id = "previousLink"})&nbsp;|&nbsp;
+    @Html.ActionLink("Next", "Next", new {id = Model.Id}, new {id = "nextLink"})&nbsp;|&nbsp;
+    <a href="~/images/master/@Model.AlbumName/@Model.FileName" target="_blank">View Original</a>&nbsp;|&nbsp;
+    @Html.ActionLink("Back to Album", "View", "Album", new {id = Model.AlbumId}, null)
+</p>
+
+<div style="text-align: center">
+    <table width="100%">
+        <tr>
+            <td>
+                <picture>
+                    <img src="~/images/view/@Model.AlbumName/@Model.FileName" />
+                </picture>
+            </td>
+        </tr>
+    </table>
+</div>
+
+@section scripts{
+    <script language="javascript">
+        function leftArrowPressed() {
+            $('#previousLink')[0].click();
+        }
+
+        function rightArrowPressed() {
+            $('#nextLink')[0].click();
+        }
+
+        document.onkeydown = function(evt) {
+            evt = evt || window.event;
+            switch (evt.keyCode) {
+            case 37:
+                leftArrowPressed();
+                break;
+            case 39:
+                rightArrowPressed();
+                break;
+            }
+        };
+    </script>
+}
