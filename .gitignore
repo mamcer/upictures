@@ -30,3 +30,6 @@ x86/
 .DS_Store
 .idea
 .vscode
+src/UPictures.Web/wwwroot/images/master/*
+src/UPictures.Web/wwwroot/images/view/*
+src/UPictures.Web/wwwroot/images/thumbnail/*

@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{257811AE-7A6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UPictures.Web", "src\UPictures.Web\UPictures.Web.csproj", "{94A6201D-E14F-4ED1-9950-50E3AE52A866}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UPictures.Scanner", "src\UPictures.Scanner\UPictures.Scanner.csproj", "{E333ACFE-EF49-4349-8610-9A0060B90F3E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,8 +34,21 @@ Global
 		{94A6201D-E14F-4ED1-9950-50E3AE52A866}.Release|x64.Build.0 = Release|Any CPU
 		{94A6201D-E14F-4ED1-9950-50E3AE52A866}.Release|x86.ActiveCfg = Release|Any CPU
 		{94A6201D-E14F-4ED1-9950-50E3AE52A866}.Release|x86.Build.0 = Release|Any CPU
+		{E333ACFE-EF49-4349-8610-9A0060B90F3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E333ACFE-EF49-4349-8610-9A0060B90F3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E333ACFE-EF49-4349-8610-9A0060B90F3E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E333ACFE-EF49-4349-8610-9A0060B90F3E}.Debug|x64.Build.0 = Debug|Any CPU
+		{E333ACFE-EF49-4349-8610-9A0060B90F3E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E333ACFE-EF49-4349-8610-9A0060B90F3E}.Debug|x86.Build.0 = Debug|Any CPU
+		{E333ACFE-EF49-4349-8610-9A0060B90F3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E333ACFE-EF49-4349-8610-9A0060B90F3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E333ACFE-EF49-4349-8610-9A0060B90F3E}.Release|x64.ActiveCfg = Release|Any CPU
+		{E333ACFE-EF49-4349-8610-9A0060B90F3E}.Release|x64.Build.0 = Release|Any CPU
+		{E333ACFE-EF49-4349-8610-9A0060B90F3E}.Release|x86.ActiveCfg = Release|Any CPU
+		{E333ACFE-EF49-4349-8610-9A0060B90F3E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{94A6201D-E14F-4ED1-9950-50E3AE52A866} = {257811AE-7A6E-439E-8ADF-77C7F3DA3163}
+		{E333ACFE-EF49-4349-8610-9A0060B90F3E} = {257811AE-7A6E-439E-8ADF-77C7F3DA3163}
 	EndGlobalSection
 EndGlobal
