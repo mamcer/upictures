@@ -4,29 +4,21 @@
     ViewData["Title"] = "Album";
 }
 
-<h2>@Model.Name</h2>
+<div class="title" itemscope itemtype="http://schema.org/ListItem" itemprop="itemListElement">
+    <h2 itemscope itemtype="http://schema.org/Thing" itemprop="item">
+        <span itemprop="name">@Model.Name</span>
+    </h2>
+    <meta itemprop="position" content="2" />
+</div>
 
-<table class="table table-bordered">
-    @{var index = 0;}
-    @foreach (var picture in Model.Pictures)
-    {
-        if (index == 0)
+
+<div class="pic photolist">
+    @{
+        foreach (var picture in Model.Pictures)
         {
-            @:<tr>
-        }
-        index += 1;
-        <td>
-           <a href="@Url.Action("View", "Picture", new { id = picture.Id })">
-              <picture>
-                 <source src="~/images/thumbnail/@Model.Name/@picture.FileName" />
-                 <img src="~/images/thumbnail/@Model.Name/@picture.FileName" />
-              </picture>
-           </a>
-        </td>
-        if (index == 7)
-        {
-           @:</tr>
-           index = 0;
+            <a href="@Url.Action("View", "Picture", new { id = picture.Id })" data-text="@picture.AlbumName">
+                <img src="~/images/thumbnail/@Model.Name/@picture.FileName" Type="Thumbnail" />
+            </a>
         }
     }
-</table>
+</div>

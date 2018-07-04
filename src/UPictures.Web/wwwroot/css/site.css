@@ -1,37 +1,146 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
-for details on configuring this project to bundle and minify static web assets. */
+﻿html {
+    position: relative;
+    min-height: 100%;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+}
+
 body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    margin: 0 auto 70px auto;
+    padding: 0;
+    color: #444;
+    background-color: #fff;
+    font: 16px/1.4 "trebuchet ms", palatino, tahoma, sans-serif;
 }
 
-/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+.container {
+    display: block;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 15px;
 }
 
-/* Carousel */
-.carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
+header {
+    margin: 0 0 20px 0;
+    padding: 0;
+    background-color: #444;
 }
 
-/* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
+h1 {
+    margin: 0;
+    font-weight: normal;
+    line-height: 60px;
+}
+
+h1 a {
+    color: #fff;
+    text-decoration: none;
+}
+
+a {
+    color: #0e5494;
+}
+
+img {
+    border: none;
+}
+
+.title {
+    line-height: 2em;
+    margin-bottom: .5em;
+}
+
+h2 {
+    margin: 0;
+    max-width: 70%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+nav {
+    float: right;
+}
+
+.pic .img {
+    display: block;
+    width: 100%;
+    opacity: 0;
+    -moz-transition: opacity 500ms ease-in-out;
+    -o-transition: opacity 500ms ease-in-out;
+    -webkit-transition: opacity 500ms ease-in-out;
+    transition: opacity 500ms ease-in-out;
+    will-change: opacity;
+}
+
+.pic .a {
+    background: #f1f1f1;
+    display: block;
+    margin-bottom: 2px;
+     content: attr(data-text);
+     position: absolute;
+     bottom: 0;
+     width: 100%;
+     font-size: .9em;
+     line-height: 1.7;
+     text-indent: 5px;
+     background: rgba(0, 0, 0, .60);
+     color: #fff;
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
+     opacity: 0;
+     -moz-transition: opacity 300ms ease-in-out;
+     -o-transition: opacity 300ms ease-in-out;
+     -webkit-transition: opacity 300ms ease-in-out;
+     transition: opacity 300ms ease-in-out;
+ }
+
+.albumlist {
+    display: flex;
+    flex-flow: row wrap;
+    margin: -2px;
+
+}
+
+.albumlist a {
+    flex-basis: 15%;
+    flex-grow: 1;
+    min-width: 196px;
+    margin: 1px;
     width: 100%;
 }
 
-/* QR code generator */
-#qrCode {
-    margin: 15px;
+
+.albumlist img {
+    height: 175px;
 }
 
-/* Hide/rearrange for smaller screens */
-@media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
-        display: none;
-    }
+.photolist {
+    margin-right: -2px;
+    margin-bottom: 20px;
+    -ms-column-gap: 2px;
+    -moz-column-gap: 2px;
+    -webkit-column-gap: 2px;
+    column-gap: 2px;
+    -ms-column-width: 190px;
+    -moz-column-width: 190px;
+    -webkit-column-width: 190px;
+    column-width: 190px;
+}
+
+.photo img {
+    margin-bottom: 8px;
+    height: auto;
+    max-width: 960px
+}
+
+
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    text-align: center;
 }

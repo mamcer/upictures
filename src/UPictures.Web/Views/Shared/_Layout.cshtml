@@ -1,12 +1,12 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"]</title>
-
+    <title itemprop="name">@ViewData["Title"]</title>
+     
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" /> *@
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
@@ -15,34 +15,31 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+    @RenderSection("head", required: false)
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @* <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">UPictures.Web</a> *@
+    <div itemscope itemtype="http://schema.org/BreadcrumbList" itemprop="breadcrumb">
+        <header>
+            <div class="container" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+                <h1>
+                    <a href="~/" title="Back to the home page" itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                        <span itemprop="name">UPictures</span>
+                    </a>
+                </h1>
+                <meta itemprop="position" content="1" />
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+        </header>
 
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2018 - UPictures</p>
-        </footer>
+        <main class="container">
+            @RenderBody()
+        </main>
     </div>
+
+    <footer>
+        <p class="container">
+            2018 - UPictures
+        </p>
+    </footer>
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -64,7 +61,7 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
-
-    @RenderSection("Scripts", required: false)
+    
+    @RenderSection("scripts", required: false)
 </body>
 </html>
