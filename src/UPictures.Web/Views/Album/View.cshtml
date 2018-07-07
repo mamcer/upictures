@@ -17,7 +17,7 @@
         foreach (var picture in Model.Pictures)
         {
             <a href="@Url.Action("View", "Picture", new { id = picture.Id })" data-text="@picture.AlbumName">
-                <img src="~/images/thumbnail/@Model.Name/@picture.FileName" Type="Thumbnail" />
+                <img src="~/pictures/thumbnail/@Model.Name/@picture.FileName" Type="Thumbnail" />
             </a>
         }
     }

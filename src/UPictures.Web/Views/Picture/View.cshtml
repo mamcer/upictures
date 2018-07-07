@@ -2,7 +2,7 @@
 
 <div class="photo">
     <div class="pic">
-        <img src="~/images/view/@Model.AlbumName/@Model.FileName" type="Full" />
+        <img src="~/pictures/view/@Model.AlbumName/@Model.FileName" type="Full" />
     </div>
 </div>
 
@@ -33,6 +33,6 @@
 @section head {
     @Html.ActionLink("Previous", "Previous", new {id = Model.Id}, new {id = "previousLink"})&nbsp;|&nbsp;
     @Html.ActionLink("Next", "Next", new {id = Model.Id}, new {id = "nextLink"})&nbsp;|&nbsp;
-    <a href="~/images/master/@Model.AlbumName/@Model.FileName" target="_blank">View Original</a>&nbsp;|&nbsp;
+    <a href="~/pictures/master/@Model.AlbumName/@Model.FileName" target="_blank">View Original</a>&nbsp;|&nbsp;
     @Html.ActionLink("Back to Album", "View", "Album", new {id = Model.AlbumId}, null)
 }
