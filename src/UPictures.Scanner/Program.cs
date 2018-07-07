@@ -86,18 +86,26 @@ namespace UPictures.Scanner
                                     image.Save(destFile);
                                 }
 
-                                DateTime datePictureTaken;
-                                string cameraMaker, cameraModel;
-                                uint height, width;
+                                DateTime datePictureTaken = DateTime.Today;
+                                string cameraMaker = string.Empty, cameraModel = string.Empty;
+                                uint height = 0, width = 0;
                                 double fileSize;
 
-                                using (ExifReader reader = new ExifReader(filePath))
+                                try
                                 {
-                                    reader.GetTagValue(ExifTags.DateTimeDigitized, out datePictureTaken);
-                                    reader.GetTagValue(ExifTags.Make, out cameraMaker);
-                                    reader.GetTagValue(ExifTags.Model, out cameraModel);
-                                    reader.GetTagValue(ExifTags.PixelXDimension, out width);
-                                    reader.GetTagValue(ExifTags.PixelYDimension, out height);
+                                    using (ExifReader reader = new ExifReader(filePath))
+                                    {
+                                        reader.GetTagValue(ExifTags.DateTimeDigitized, out datePictureTaken);
+                                        reader.GetTagValue(ExifTags.Make, out cameraMaker);
+                                        reader.GetTagValue(ExifTags.Model, out cameraModel);
+                                        reader.GetTagValue(ExifTags.PixelXDimension, out width);
+                                        reader.GetTagValue(ExifTags.PixelYDimension, out height);
+                                    }
+
+                                }
+                                catch
+                                {
+                                    Console.WriteLine($"        unable to read exif information for: {Path.GetFileName(filePath)}");
                                 }
 
                                 using (var file = File.OpenRead(filePath))
