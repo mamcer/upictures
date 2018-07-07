@@ -33,3 +33,5 @@ x86/
 src/UPictures.Web/wwwroot/images/master/*
 src/UPictures.Web/wwwroot/images/view/*
 src/UPictures.Web/wwwroot/images/thumbnail/*
+
+**/out/*
