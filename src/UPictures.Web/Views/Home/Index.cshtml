@@ -1,18 +1,10 @@
 ﻿@model IEnumerable<IndexViewModel>
 
 @{
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = "Albums";
 }
 
-<h2>Albums</h2>
-
 <table class="table">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th># Pictures</th>
-    </tr>
-    </thead>
     <tbody>
     @foreach (var album in Model)
     {

@@ -1,9 +1,21 @@
 ﻿@model PictureViewModel
 
-<div class="photo">
-    <div class="pic">
-        <img src="~/pictures/view/@Model.AlbumName/@Model.FileName" type="Full" />
-    </div>
+@{
+    ViewData["Title"] = @Model.AlbumName;
+    ViewData["Link"] = @Url.Action("View", "Album", new { id = Model.AlbumId });
+}
+
+<div style="text-align: center">
+    @Html.ActionLink("Previous", "Previous", new {id = Model.Id}, new {id = "previousLink"})
+    &nbsp;&nbsp;|&nbsp;&nbsp;
+    @Html.ActionLink("Next", "Next", new {id = Model.Id}, new {id = "nextLink"})
+</div>
+<br />
+
+<img src="~/pictures/view/@Model.AlbumName/@Model.FileName" type="Full" style='width:100%;' border="0" alt="Null"/>
+
+<div style="text-align: right">
+    <a href="~/pictures/master/@Model.AlbumName/@Model.FileName" target="_blank">View Original</a>
 </div>
 
 @section scripts{
@@ -31,8 +43,4 @@
 }
 
 @section head {
-    @Html.ActionLink("Previous", "Previous", new {id = Model.Id}, new {id = "previousLink"})&nbsp;|&nbsp;
-    @Html.ActionLink("Next", "Next", new {id = Model.Id}, new {id = "nextLink"})&nbsp;|&nbsp;
-    <a href="~/pictures/master/@Model.AlbumName/@Model.FileName" target="_blank">View Original</a>&nbsp;|&nbsp;
-    @Html.ActionLink("Back to Album", "View", "Album", new {id = Model.AlbumId}, null)
 }

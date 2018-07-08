@@ -1,16 +1,8 @@
 ﻿@model AlbumViewModel
 
 @{
-    ViewData["Title"] = "Album";
+    ViewData["Title"] = @Model.Name;
 }
-
-<div class="title" itemscope itemtype="http://schema.org/ListItem" itemprop="itemListElement">
-    <h2 itemscope itemtype="http://schema.org/Thing" itemprop="item">
-        <span itemprop="name">@Model.Name</span>
-    </h2>
-    <meta itemprop="position" content="2" />
-</div>
-
 
 <div class="pic photolist">
     @{

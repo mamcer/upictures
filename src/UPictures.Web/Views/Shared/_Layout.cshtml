@@ -22,8 +22,8 @@
         <header>
             <div class="container" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">
                 <h1>
-                    <a href="~/" title="Back to the home page" itemscope itemtype="http://schema.org/Thing" itemprop="item">
-                        <span itemprop="name">UPictures</span>
+                    <a href="@ViewData["Link"]" title="@ViewData["Title"]" itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                        <span itemprop="name">@ViewData["Title"]</span>
                     </a>
                 </h1>
                 <meta itemprop="position" content="1" />
@@ -37,7 +37,7 @@
 
     <footer>
         <p class="container">
-            2018 - UPictures
+            2018 - <a href="~/">UPictures</a>
         </p>
     </footer>
 
