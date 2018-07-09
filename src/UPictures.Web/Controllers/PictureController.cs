@@ -24,7 +24,8 @@ namespace UPictures.Web.Controllers
                     Id = p.Id,
                     FileName = p.FileName,
                     AlbumId = p.Album.Id,
-                    AlbumName = p.Album.Name
+                    AlbumName = p.Album.Name,
+                    DateTaken = p.DateTaken
                 })
                 .FirstOrDefault();
 

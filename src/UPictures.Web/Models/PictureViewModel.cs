@@ -1,4 +1,6 @@
-﻿namespace UPictures.Web.Models
+﻿using System;
+
+namespace UPictures.Web.Models
 {
     public class PictureViewModel
     {
@@ -9,5 +11,7 @@
         public string AlbumName { get; set; }
 
         public int AlbumId { get; set; }
+
+        public DateTime DateTaken { get; set; }
     }
 }

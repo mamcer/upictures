@@ -62,7 +62,7 @@ namespace UPictures.Scanner
                         {
                             var fileExtension = Path.GetExtension(filePath);
 
-                            if (fileExtension.ToLower(CultureInfo.InvariantCulture) != ".mov" && fileExtension.ToLower(CultureInfo.InvariantCulture) != ".mp4")
+                            if (fileExtension.ToLower(CultureInfo.InvariantCulture) == ".jpg")
                             {
                                 // copy master copy
                                 var destFile = Path.Combine(masterDirectory, fileName);

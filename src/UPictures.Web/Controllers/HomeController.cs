@@ -21,7 +21,10 @@ namespace UPictures.Web.Controllers
         
         public IActionResult Index()
         {
-            var albums = _context.Albums.Include(x => x.Pictures);
+            var albums = _context.Albums
+                            .Include(x => x.Pictures)
+                            .OrderBy(x => x.Name);
+                            
             var model = new List<IndexViewModel>();
             foreach (var album in albums)
             {
