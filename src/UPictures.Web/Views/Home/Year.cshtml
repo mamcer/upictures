@@ -1,0 +1,25 @@
+﻿@model IEnumerable<MonthViewModel>
+
+@{
+    ViewData["Title"] = "Months";
+}
+
+@{ var monthNames = new []{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};}
+
+<table class="table">
+    <tbody>
+    @foreach (var month in Model)
+    {
+        <tr>
+            <td>
+                <a href="@Url.Action("Month", "Home", new {year = Convert.ToInt32(ViewData["Year"]), month = month.Month}, null)">
+                    @monthNames[month.Month - 1]
+                </a>
+            </td>
+            <td>
+                @month.PictureCount pictures
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

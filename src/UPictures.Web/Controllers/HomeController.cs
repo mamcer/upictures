@@ -21,24 +21,54 @@ namespace UPictures.Web.Controllers
         
         public IActionResult Index()
         {
-            var albums = _context.Albums
-                            .Include(x => x.Pictures)
-                            .OrderBy(x => x.Name);
-                            
-            var model = new List<IndexViewModel>();
-            foreach (var album in albums)
+            var years = _context.Pictures.Select(p => p.DateTaken.Year).Distinct().ToList();
+            var pictures = new List<YearViewModel>();
+            foreach(var year in years)
             {
-                var indexViewModel = new IndexViewModel
+                var pictureCount = _context.Pictures.Where(p => p.DateTaken.Year == year).Count();
+                pictures.Add(new YearViewModel
                 {
-                    Id = album.Id,
-                    Name = album.Name,
-                    PictureCount = album.Pictures.Count
-                };
-                
-                model.Add(indexViewModel);
+                    Year = year,
+                    PictureCount = pictureCount
+                });
             }
 
-            return View(model);
+            return View(pictures);
+        }
+
+        public IActionResult Year(int year)
+        {
+            ViewData["Year"] = year.ToString();
+            var months = _context.Pictures.Where(p => p.DateTaken.Year == year).Select(p => p.DateTaken.Month).Distinct().ToList();
+            var pictures = new List<MonthViewModel>();
+            foreach(var month in months)
+            {
+                var pictureCount = _context.Pictures.Where(p => p.DateTaken.Year == year && p.DateTaken.Month == month).Count();
+                pictures.Add(new MonthViewModel
+                {
+                    Month = month,
+                    PictureCount = pictureCount
+                });
+            }
+
+            return View(pictures);
+        }
+
+        public IActionResult Month(int year, int month)
+        {
+            var  pictures = _context.Pictures
+                            .Where(p => p.DateTaken.Year == year && p.DateTaken.Month == month)
+                            .Select(p => new PictureViewModel
+                            {
+                                Id = p.Id,
+                                FileName = p.FileName,
+                                AlbumName = p.Album.Name,
+                                AlbumId = p.Album.Id,
+                                DateTaken = p.DateTaken
+                            })
+                            .ToList();
+
+            return View(pictures);
         }
 
         public IActionResult Error()

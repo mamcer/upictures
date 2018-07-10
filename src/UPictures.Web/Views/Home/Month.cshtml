@@ -1,0 +1,16 @@
+@model IEnumerable<PictureViewModel>
+
+@{
+    ViewData["Title"] = "Pictures";
+}
+
+<div class="pic photolist">
+    @{
+        foreach (var picture in Model)
+        {
+            <a href="@Url.Action("View", "Picture", new { id = picture.Id })" data-text="@picture.AlbumName">
+                <img src="~/pictures/thumbnail/@picture.AlbumName/@picture.FileName" Type="Thumbnail" />
+            </a>
+        }
+    }
+</div>

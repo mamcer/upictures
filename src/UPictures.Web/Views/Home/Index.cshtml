@@ -1,25 +1,21 @@
-﻿@model IEnumerable<IndexViewModel>
+﻿@model IEnumerable<YearViewModel>
 
 @{
-    ViewData["Title"] = "Albums";
+    ViewData["Title"] = "Years";
 }
 
 <table class="table">
     <tbody>
-    @foreach (var album in Model)
+    @foreach (var year in Model)
     {
         <tr>
             <td>
-                <a href="@Url.Action("View", "Album", new {id = album.Id}, null)">
-                    @*                    <figure>*@
-                    @*                        <img src="~/images/thumbnail/@album.Name/@album.ThumbnailFileName" alt="@album.Name" />*@
-                    @*                        <figcaption>@album.Name [@album.Pictures.Count()]</figcaption>*@
-                    @*                    </figure>*@
-                    @album.Name
+                <a href="@Url.Action("Year", "Home", new {year = year.Year}, null)">
+                    @year.Year
                 </a>
             </td>
             <td>
-                @album.PictureCount
+                @year.PictureCount pictures
             </td>
         </tr>
     }
