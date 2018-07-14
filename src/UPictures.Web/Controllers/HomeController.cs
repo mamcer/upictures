@@ -21,7 +21,7 @@ namespace UPictures.Web.Controllers
         
         public IActionResult Index()
         {
-            var years = _context.Pictures.Select(p => p.DateTaken.Year).Distinct().ToList();
+            var years = _context.Pictures.Select(p => p.DateTaken.Year).Distinct().OrderBy(p => p).ToList();
             var pictures = new List<YearViewModel>();
             foreach(var year in years)
             {
@@ -39,7 +39,7 @@ namespace UPictures.Web.Controllers
         public IActionResult Year(int year)
         {
             ViewData["Year"] = year.ToString();
-            var months = _context.Pictures.Where(p => p.DateTaken.Year == year).Select(p => p.DateTaken.Month).Distinct().ToList();
+            var months = _context.Pictures.Where(p => p.DateTaken.Year == year).Select(p => p.DateTaken.Month).OrderBy(p => p).Distinct().ToList();
             var pictures = new List<MonthViewModel>();
             foreach(var month in months)
             {
@@ -66,6 +66,7 @@ namespace UPictures.Web.Controllers
                                 AlbumId = p.Album.Id,
                                 DateTaken = p.DateTaken
                             })
+                            .OrderBy(p => p.DateTaken.Day)
                             .ToList();
 
             return View(pictures);
