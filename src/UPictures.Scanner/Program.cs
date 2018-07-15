@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using SixLabors.ImageSharp;
@@ -48,9 +49,11 @@ namespace UPictures.Scanner
             var directories = new List<string> {rootDirectory};
             var unitOfWork = new EntityFrameworkUnitOfWork(upicturesContext);
             var pictureRepository = new PictureRepository(upicturesContext);
+            var initialDirectory = Directory.GetDirectories(rootDirectory).OrderByDescending(x => x).FirstOrDefault();
+            int initialDirectoryNumber = string.IsNullOrEmpty(initialDirectory) ? 0 : Convert.ToInt32(initialDirectory);
             for (int i = 0; i < directories.Count; i++)
             {
-                var directoryName = $"{i:00000}";
+                var directoryName = $"{i + initialDirectoryNumber:00000}";
                 var viewDirectory = Path.Combine(picturesDirectory, "view", directoryName);
                 var masterDirectory = Path.Combine(picturesDirectory, "master", directoryName);
                 var thumbnailDirectory = Path.Combine(picturesDirectory, "thumbnail", directoryName);
