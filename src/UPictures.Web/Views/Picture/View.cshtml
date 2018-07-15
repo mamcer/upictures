@@ -1,8 +1,7 @@
 ﻿@model PictureViewModel
 
 @{
-    ViewData["Title"] = @Model.AlbumName;
-    ViewData["Link"] = @Url.Action("View", "Album", new { id = Model.AlbumId });
+    ViewData["Title"] = @Model.DirectoryName;
 }
 
 <div style="text-align: center">
@@ -12,14 +11,14 @@
 </div>
 <br />
 
-<img src="~/pictures/view/@Model.AlbumName/@Model.FileName" type="Full" style='width:100%;' border="0" alt="Null"/>
+<img src="~/pictures/view/@Model.DirectoryName/@Model.FileName" type="Full" style='width:100%;' border="0" alt="Null"/>
 
 <div style="text-align: left">
     <span>@Model.DateTaken.ToLongDateString()</span>
 </div>
 
 <div style="text-align: right">
-    <a href="~/pictures/master/@Model.AlbumName/@Model.FileName" target="_blank">View Original</a>
+    <a href="~/pictures/master/@Model.DirectoryName/@Model.FileName" target="_blank">View Original</a>
 </div>
 
 @section scripts{

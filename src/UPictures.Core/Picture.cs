@@ -1,13 +1,9 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace UPictures.Web.Core
+namespace UPictures.Core
 {
-    [Table("Picture")]
     public class Picture
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         
         public string Extension { get; set; }
@@ -30,6 +26,8 @@ namespace UPictures.Web.Core
 
         public string FileName => $"{Name}{Extension}";
 
-        public virtual Album Album { get; set; }
+        public string Hash { get; set; }
+
+        public string DirectoryName { get; set; }        
     }
 }

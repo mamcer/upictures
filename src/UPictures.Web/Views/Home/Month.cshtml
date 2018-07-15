@@ -8,8 +8,8 @@
     @{
         foreach (var picture in Model)
         {
-            <a href="@Url.Action("View", "Picture", new { id = picture.Id })" data-text="@picture.AlbumName">
-                <img src="~/pictures/thumbnail/@picture.AlbumName/@picture.FileName" Type="Thumbnail" />
+            <a href="@Url.Action("View", "Picture", new { id = picture.Id })" data-text="@picture.DirectoryName">
+                <img src="~/pictures/thumbnail/@picture.DirectoryName/@picture.FileName" Type="Thumbnail" />
             </a>
         }
     }

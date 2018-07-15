@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using UPictures.Web.Data;
+using UPictures.Data;
 
-namespace UPictures.Web.Migrations
+namespace UPictures.Data.Migrations
 {
     [DbContext(typeof(UPicturesContext))]
     partial class UPicturesContextModelSnapshot : ModelSnapshot
@@ -19,40 +19,35 @@ namespace UPictures.Web.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("UPictures.Web.Core.Album", b =>
+            modelBuilder.Entity("UPictures.Core.Picture", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("CameraMaker")
+                        .HasMaxLength(255);
 
-                    b.HasKey("Id");
-
-                    b.ToTable("Album");
-                });
-
-            modelBuilder.Entity("UPictures.Web.Core.Picture", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("AlbumId");
-
-                    b.Property<string>("CameraMaker");
-
-                    b.Property<string>("CameraModel");
+                    b.Property<string>("CameraModel")
+                        .HasMaxLength(255);
 
                     b.Property<DateTime>("DateTaken");
 
-                    b.Property<string>("Extension");
+                    b.Property<string>("DirectoryName")
+                        .HasMaxLength(5);
+
+                    b.Property<string>("Extension")
+                        .HasMaxLength(50);
 
                     b.Property<double>("FileSize");
 
+                    b.Property<string>("Hash")
+                        .HasMaxLength(32);
+
                     b.Property<int>("Height");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasMaxLength(255);
 
                     b.Property<string>("Path");
 
@@ -60,16 +55,7 @@ namespace UPictures.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AlbumId");
-
                     b.ToTable("Picture");
-                });
-
-            modelBuilder.Entity("UPictures.Web.Core.Picture", b =>
-                {
-                    b.HasOne("UPictures.Web.Core.Album", "Album")
-                        .WithMany("Pictures")
-                        .HasForeignKey("AlbumId");
                 });
 #pragma warning restore 612, 618
         }

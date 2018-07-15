@@ -8,4 +8,8 @@
   <ItemGroup>
     <Content Remove="Views\Shared\_CookieConsentPartial.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UPictures.Data\UPictures.Data.csproj" />
+    <ProjectReference Include="..\UPictures.Core\UPictures.Core.csproj" />
+  </ItemGroup>
 </Project>

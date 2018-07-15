@@ -8,9 +8,7 @@ namespace UPictures.Web.Models
 
         public string FileName { get; set; }
 
-        public string AlbumName { get; set; }
-
-        public int AlbumId { get; set; }
+        public string DirectoryName { get; set; }
 
         public DateTime DateTaken { get; set; }
     }

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using UPictures.Web.Data;
 using UPictures.Web.Models;
+using UPictures.Data;
 
 namespace UPictures.Web.Controllers
 {
@@ -25,7 +22,7 @@ namespace UPictures.Web.Controllers
             var pictures = new List<YearViewModel>();
             foreach(var year in years)
             {
-                var pictureCount = _context.Pictures.Where(p => p.DateTaken.Year == year).Count();
+                var pictureCount = _context.Pictures.Count(p => p.DateTaken.Year == year);
                 pictures.Add(new YearViewModel
                 {
                     Year = year,
@@ -43,7 +40,7 @@ namespace UPictures.Web.Controllers
             var pictures = new List<MonthViewModel>();
             foreach(var month in months)
             {
-                var pictureCount = _context.Pictures.Where(p => p.DateTaken.Year == year && p.DateTaken.Month == month).Count();
+                var pictureCount = _context.Pictures.Count(p => p.DateTaken.Year == year && p.DateTaken.Month == month);
                 pictures.Add(new MonthViewModel
                 {
                     Month = month,
@@ -62,8 +59,7 @@ namespace UPictures.Web.Controllers
                             {
                                 Id = p.Id,
                                 FileName = p.FileName,
-                                AlbumName = p.Album.Name,
-                                AlbumId = p.Album.Id,
+                                DirectoryName = p.DirectoryName,
                                 DateTaken = p.DateTaken
                             })
                             .OrderBy(p => p.DateTaken.Day)
