@@ -3,6 +3,8 @@ WORKDIR /app
 
 # copy csproj and restore as distinct layers
 COPY *.sln .
+COPY src/UPictures.Core/*.csproj ./src/UPictures.Core/
+COPY src/UPictures.Data/*.csproj ./src/UPictures.Data/
 COPY src/UPictures.Scanner/*.csproj ./src/UPictures.Scanner/
 COPY src/UPictures.Web/*.csproj ./src/UPictures.Web/
 RUN dotnet restore
