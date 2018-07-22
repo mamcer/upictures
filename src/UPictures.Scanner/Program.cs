@@ -12,6 +12,9 @@ using UPictures.Data;
 using UPictures.Core;
 using System.Security.Cryptography;
 using System.Text;
+using log4net;
+using System.Reflection;
+using log4net.Config;
 
 namespace UPictures.Scanner
 {
@@ -31,13 +34,17 @@ namespace UPictures.Scanner
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddEnvironmentVariables();
+                .AddEnvironmentVariables();                      
 
             IConfigurationRoot configuration = builder.Build();
             var options =
                 new DbContextOptionsBuilder<UPicturesContext>().UseSqlServer(
                     configuration.GetConnectionString("DefaultConnection"));
             var upicturesContext = new UPicturesContext(options.Options);
+
+            var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
+            XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
+            log4net.ILog log = log4net.LogManager.GetLogger(typeof(Program));
 
             var startingTime = DateTime.Now;
             Console.WriteLine($"scan started {startingTime.Hour}:{startingTime.Minute}:{startingTime.Second}");
@@ -69,12 +76,14 @@ namespace UPictures.Scanner
                     if (fileName.StartsWith("."))
                     {
                         Console.WriteLine($"        file name starts with dot:{filePath}");
+                        log.Error($"file name starts with dot:{filePath}");
                         continue;
                     }
 
                     if (!validFileExtensions.Contains(fileExtension))
                     {
                         Console.WriteLine($"        unknown file extension:{filePath}");
+                        log.Error($"unknown file extension:{filePath}");
                         continue;
                     }
 
@@ -93,6 +102,7 @@ namespace UPictures.Scanner
                     if (pictureRepository.ContainsHash(hash))
                     {
                         Console.WriteLine($"        file exists:{filePath}");
+                        log.Error($"file exists:{filePath}");
                         continue;
                     }
 
@@ -140,6 +150,7 @@ namespace UPictures.Scanner
                     {
                         Console.WriteLine(
                             $"        unable to read exif information:{filePath}");
+                        log.Error($"unable to read exif information:{filePath}");
                     }
 
                     using (var file = File.OpenRead(filePath))
