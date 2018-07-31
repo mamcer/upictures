@@ -1,5 +1,6 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Internal;
 using UPictures.Web.Models;
 using UPictures.Data;
 
@@ -32,23 +33,20 @@ namespace UPictures.Web.Controllers
         
         public ActionResult Next(int id)
         {
-            var nextPictureId = id;
-            // var picture = _context.Pictures.Include(p => p.Album).FirstOrDefault(p => p.Id == id);
-            // if (picture != null)
-            // {
-            //     var album = _context.Albums.Include(a => a.Pictures).FirstOrDefault(a => a.Id == picture.Album.Id);
-            //     if (album != null)
-            //     {
-            //         var pictures = album.Pictures.OrderBy(p => p.Id).ToList();
-            //         var index = pictures.FindIndex(p => p.Id == id);
-            //         nextPictureId = pictures[index].Id;
-
-            //         if (pictures.Count > index + 1)
-            //         {
-            //             nextPictureId = pictures[index + 1].Id;
-            //         }
-            //     }
-            // }
+            var picture = _context.Pictures.First(p => p.Id == id);
+            var  pictures = _context.Pictures
+                .Where(p => p.DateTaken.Year == picture.DateTaken.Year && p.DateTaken.Month == picture.DateTaken.Month)
+                .OrderBy(p => p.DateTaken.Day);
+            var index = pictures.IndexOf(picture);
+            var next = pictures[index + 1];
+                var returnValue = new PictureViewModel
+                {
+                    Id = next.Id,
+                    FileName = next.FileName,
+                    DirectoryName = next.DirectoryName,
+                    DateTaken = next.DateTaken
+                })
+               
 
             return RedirectToAction("View", new { id = nextPictureId });
         }
