@@ -38,40 +38,34 @@ namespace UPictures.Web.Controllers
                 .Where(p => p.DateTaken.Year == picture.DateTaken.Year && p.DateTaken.Month == picture.DateTaken.Month)
                 .OrderBy(p => p.DateTaken.Day);
             var index = pictures.IndexOf(picture);
-            var next = pictures[index + 1];
-                var returnValue = new PictureViewModel
-                {
-                    Id = next.Id,
-                    FileName = next.FileName,
-                    DirectoryName = next.DirectoryName,
-                    DateTaken = next.DateTaken
-                })
-               
+            var picturesArray = pictures.ToArray();
+            
+            var nextPictureId = id;
+            if(picturesArray.Length > index + 1)
+            {
+                var next = picturesArray[index + 1];
+                nextPictureId = next.Id;
+            }    
 
             return RedirectToAction("View", new { id = nextPictureId });
         }
 
         public ActionResult Previous(int id)
         {
-            var previousPictureId = id;
-            // var picture = _context.Pictures.Include(p => p.Album).FirstOrDefault(p => p.Id == id);
-            // if (picture != null)
-            // {
-            //     var album = _context.Albums.Include(a => a.Pictures).FirstOrDefault(a => a.Id == picture.Album.Id);
-            //     if (album != null)
-            //     {
-            //         var pictures = album.Pictures.OrderBy(p => p.Id).ToList();
-            //         var index = pictures.FindIndex(p => p.Id == id);
-            //         previousPictureId = pictures[index].Id;
+            var picture = _context.Pictures.First(p => p.Id == id);
+            var  pictures = _context.Pictures
+                .Where(p => p.DateTaken.Year == picture.DateTaken.Year && p.DateTaken.Month == picture.DateTaken.Month)
+                .OrderBy(p => p.DateTaken.Day);
+            var index = pictures.IndexOf(picture);
+            var nextPictureId = id;
+            if(index > 0)
+            {
+                var picturesArray = pictures.ToArray();
+                var next = picturesArray[index - 1];
+                nextPictureId = next.Id;
+            }    
 
-            //         if (index > 0)
-            //         {
-            //             previousPictureId = pictures[index - 1].Id;
-            //         }
-            //     }
-            // }
-
-            return RedirectToAction("View", new { id = previousPictureId });
+            return RedirectToAction("View", new { id = nextPictureId });
         }
     }
 }
