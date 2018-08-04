@@ -4,6 +4,10 @@
     ViewData["Title"] = "Pictures";
 }
 
+@{ var pictureYear=Model.FirstOrDefault().DateTaken.Year; }
+
+<a href="@Url.Action("Year", "Home", new {year = pictureYear}, null)">@pictureYear</a>
+
 <div class="pic photolist">
     @{
         foreach (var picture in Model)

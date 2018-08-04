@@ -4,6 +4,10 @@
     ViewData["Title"] = @Model.DirectoryName;
 }
 
+@{ var monthNames = new []{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};}
+
+<a href="@Url.Action("Month", "Home", new {year = Model.DateTaken.Year, month = Model.DateTaken.Month}, null)">@monthNames[Model.DateTaken.Month - 1], @Model.DateTaken.Year</a>
+
 <div style="text-align: center">
     @Html.ActionLink("Previous", "Previous", new {id = Model.Id}, new {id = "previousLink"})
     &nbsp;&nbsp;|&nbsp;&nbsp;
