@@ -2,11 +2,10 @@
 
 @{
     ViewData["Title"] = @Model.DirectoryName;
+    var monthNames = new []{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+    ViewData["TitleName"] = $"{monthNames[Model.DateTaken.Month - 1]} {Model.DateTaken.Day}, {Model.DateTaken.Year}";
+    ViewData["TitleLink"] = Url.Action("Month", "Home", new {year = Model.DateTaken.Year, month = Model.DateTaken.Month}, null);  
 }
-
-@{ var monthNames = new []{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};}
-
-<a href="@Url.Action("Month", "Home", new {year = Model.DateTaken.Year, month = Model.DateTaken.Month}, null)">@monthNames[Model.DateTaken.Month - 1], @Model.DateTaken.Year</a>
 
 <div style="text-align: center">
     @Html.ActionLink("Previous", "Previous", new {id = Model.Id}, new {id = "previousLink"})
@@ -16,10 +15,6 @@
 <br />
 
 <img src="~/pictures/view/@Model.DirectoryName/@Model.FileName" type="Full" style='width:100%;' border="0" alt="Null"/>
-
-<div style="text-align: left">
-    <span>@Model.DateTaken.ToLongDateString()</span>
-</div>
 
 <div style="text-align: left">
     <a href="~/pictures/master/@Model.DirectoryName/@Model.FileName" target="_blank">View Original</a>

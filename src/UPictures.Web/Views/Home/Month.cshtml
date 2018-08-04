@@ -1,12 +1,13 @@
 @model IEnumerable<PictureViewModel>
 
 @{
-    ViewData["Title"] = "Pictures";
+    ViewData["Title"] = "UPictures";
+    var monthNames = new []{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+    var pictureMonth = Model.FirstOrDefault().DateTaken.Month;
+    var pictureYear = Model.FirstOrDefault().DateTaken.Year;
+    ViewData["TitleName"] = monthNames[pictureMonth - 1] + $", {pictureYear}";
+    ViewData["TitleLink"] = Url.Action("Year", "Home", new { year = pictureYear }, null);
 }
-
-@{ var pictureYear=Model.FirstOrDefault().DateTaken.Year; }
-
-<a href="@Url.Action("Year", "Home", new {year = pictureYear}, null)">@pictureYear</a>
 
 <div class="pic photolist">
     @{

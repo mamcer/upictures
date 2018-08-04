@@ -22,8 +22,12 @@
         <header>
             <div class="container" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">
                 <h1>
-                    <a href="~/" title="UPictures" itemscope itemtype="http://schema.org/Thing" itemprop="item">
-                        <span itemprop="name">UPictures</span>
+                    @{
+                        var titleLink = ViewData["TitleLink"] == null || string.IsNullOrEmpty(ViewData["TitleLink"].ToString()) ? "/" : ViewData["TitleLink"];
+                        var titleName = ViewData["TitleName"] == null || string.IsNullOrEmpty(ViewData["TitleName"].ToString()) ? "No Title" : ViewData["TitleName"];
+                    }
+                    <a href="@titleLink" title="@titleName" itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                        <span itemprop="name">@titleName</span>
                     </a>
                 </h1>
                 <meta itemprop="position" content="1" />
