@@ -14,7 +14,7 @@
     {
         <tr>
             <td>
-                <a href="@Url.Action("Month", "Home", new {year = Convert.ToInt32(ViewData["Year"]), month = month.Month}, null)">
+                <a href="@Url.Action("Month", "Home", new {year = Convert.ToInt32(ViewData["Year"]), month = month.Month, pageIndex = 1, pageSize = 20}, null)">
                     @monthNames[month.Month - 1]
                 </a>
             </td>

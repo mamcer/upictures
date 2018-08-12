@@ -51,21 +51,31 @@ namespace UPictures.Web.Controllers
             return View(pictures);
         }
 
-        public IActionResult Month(int year, int month)
+        public IActionResult Month(int year, int month, int pageIndex, int pageSize)
         {
             var  pictures = _context.Pictures
-                            .Where(p => p.DateTaken.Year == year && p.DateTaken.Month == month)
-                            .Select(p => new PictureViewModel
-                            {
-                                Id = p.Id,
-                                FileName = p.FileName,
-                                DirectoryName = p.DirectoryName,
-                                DateTaken = p.DateTaken
-                            })
-                            .OrderBy(p => p.DateTaken.Day)
-                            .ToList();
+                            .Where(p => p.DateTaken.Year == year && p.DateTaken.Month == month);
 
-            return View(pictures);
+            var picturesReturn = pictures                                                        
+                                .Select(p => new PictureViewModel
+                                {
+                                    Id = p.Id,
+                                    FileName = p.FileName,
+                                    DirectoryName = p.DirectoryName,
+                                    DateTaken = p.DateTaken
+                                })
+                                .OrderBy(p => p.DateTaken.Day)
+                                .Skip((pageIndex - 1)*pageSize)
+                                .Take(pageSize)
+                                .ToList();
+
+            return View(new PagePictureViewModel
+            {
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                Total = pictures.Count(),
+                Results = picturesReturn
+            });
         }
 
         public IActionResult Error()
