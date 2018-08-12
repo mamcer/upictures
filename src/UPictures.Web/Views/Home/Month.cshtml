@@ -21,7 +21,11 @@
 </div>
 
 @{
-    var lastPage = Model.Total/Model.PageSize;    
+    var lastPage = Model.Total/Model.PageSize; 
+    if((Model.Total % Model.PageSize) > 0)   
+    {
+        lastPage += 1;        
+    }
 }
 <h4>page @Model.PageIndex of @lastPage (total @Model.Total)</h4>
 
@@ -46,7 +50,7 @@
         </li>
     }
     <li class="page-item active"><a class="page-link" href="@Url.Action("Month", "Home", new {year = pictureYear, month = pictureMonth, pageIndex = Model.PageIndex, pageSize = Model.PageSize}, null)">@Model.PageIndex</a></li>
-    @if(Model.PageIndex + 2 < lastPage)
+    @if(Model.PageIndex + 1 <= lastPage)
     {
         <li class="page-item">
         <a class="page-link" href="@Url.Action("Month", "Home", new {year = pictureYear, month = pictureMonth, pageIndex = Model.PageIndex + 1, pageSize = Model.PageSize}, null)" aria-label="Next">
