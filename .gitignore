@@ -30,6 +30,7 @@ x86/
 .DS_Store
 .idea
 .vscode
+.vs
 src/UPictures.Web/wwwroot/pictures
 
 **/out/*

@@ -29,6 +29,34 @@ namespace UPictures.Scanner
             return sb.ToString();
         }
 
+        public static string GetSizeString(long size)
+        {
+            string unit;
+            double finalSize;
+            if (size < 1024)
+            {
+                unit = "bytes";
+                finalSize = size;
+            }
+            else if (size < 1024 * 1024)
+            {
+                unit = "Kb";
+                finalSize = Convert.ToDouble(size) / 1024;
+            }
+            else if (size < 1024 * 1024 * 1024)
+            {
+                unit = "Mb";
+                finalSize = Convert.ToDouble(size) / (1024 * 1024);
+            }
+            else
+            {
+                unit = "Gb";
+                finalSize = Convert.ToDouble(size) / (1024 * 1024 * 1024);
+            }
+
+            return string.Format("{0} {1}", Math.Round(finalSize, 2), unit);
+        }
+
         public static void Main(string[] args)
         {
             var builder = new ConfigurationBuilder()
@@ -49,29 +77,17 @@ namespace UPictures.Scanner
             var startingTime = DateTime.Now;
             Console.WriteLine($"scan started {startingTime.Hour:00}:{startingTime.Minute:00}:{startingTime.Second:00}");
             var rootDirectory = configuration["RootDirectory"];
-            var picturesDirectory = configuration["PicturesDirectory"];
             var fileCount = 0;
 
-            var validFileExtensions = new List<string> {".jpg", ".jpeg"};
             var directories = new List<string> {rootDirectory};
             var unitOfWork = new EntityFrameworkUnitOfWork(upicturesContext);
             var pictureRepository = new PictureRepository(upicturesContext);
-            var initialDirectory = Directory.GetDirectories(Path.Combine(picturesDirectory, "view")).OrderByDescending(x => x).FirstOrDefault();
-            int initialDirectoryNumber = string.IsNullOrEmpty(initialDirectory) ? 0 : Convert.ToInt32(Path.GetFileName(initialDirectory));
             for (int i = 0; i < directories.Count; i++)
             {
                 var localDirectories = Directory.GetFiles(directories[i]);
 
                 if (localDirectories.Length > 0)
                 {
-                    var directoryName = $"{i + initialDirectoryNumber:00000}";
-                    var viewDirectory = Path.Combine(picturesDirectory, "view", directoryName);
-                    var masterDirectory = Path.Combine(picturesDirectory, "master", directoryName);
-                    var thumbnailDirectory = Path.Combine(picturesDirectory, "thumbnail", directoryName);
-                    Directory.CreateDirectory(viewDirectory);
-                    Directory.CreateDirectory(masterDirectory);
-                    Directory.CreateDirectory(thumbnailDirectory);
-
                     foreach (var filePath in localDirectories)
                     {
                         var fileExtension = Path.GetExtension(filePath).ToLower();
@@ -81,13 +97,6 @@ namespace UPictures.Scanner
                         {
                             Console.WriteLine($"        file name starts with dot:{filePath}");
                             log.Error($"file name starts with dot:{filePath}");
-                            continue;
-                        }
-
-                        if (!validFileExtensions.Contains(fileExtension))
-                        {
-                            Console.WriteLine($"        unknown file extension:{filePath}");
-                            log.Error($"unknown file extension:{filePath}");
                             continue;
                         }
 
@@ -102,86 +111,39 @@ namespace UPictures.Scanner
                             }
                         }
 
-                        // check if file already exists in the database
-                        if (pictureRepository.ContainsHash(hash))
-                        {
-                            Console.WriteLine($"        file exists:{filePath}");
-                            log.Error($"file exists:{filePath}");
-                            continue;
-                        }
+                        //// check if file already exists in the database
+                        //if (pictureRepository.ContainsHash(hash))
+                        //{
+                        //    Console.WriteLine($"        file exists:{filePath}");
+                        //    log.Error($"file exists:{filePath}");
+                        //    continue;
+                        //}
 
-                        Console.WriteLine($"        processing file:{filePath}");
+                        //Console.WriteLine($"        processing file:{filePath}");
 
-                        // copy master copy
-                        var destFile = Path.Combine(masterDirectory, fileName + fileExtension);
-                        File.Copy(filePath, destFile, true);
-
-                        // create view copy
-                        destFile = Path.Combine(viewDirectory, fileName + fileExtension);
-                        using (Image<Rgba32> image = Image.Load(filePath))
-                        {
-                            image.Mutate(x => x
-                                .Resize(1024, 0));
-                            image.Save(destFile);
-                        }
-
-                        // create thumbnail copy
-                        destFile = Path.Combine(thumbnailDirectory, fileName + fileExtension);
-                        using (Image<Rgba32> image = Image.Load(filePath))
-                        {
-                            image.Mutate(x => x
-                                .Resize(200, 0));
-                            image.Save(destFile);
-                        }
-
-                        // read file metadata
-                        DateTime datePictureTaken = DateTime.Today;
-                        string cameraMaker = string.Empty, cameraModel = string.Empty;
-                        uint height = 0, width = 0;
-                        double fileSize;
-                        try
-                        {
-                            using (ExifReader reader = new ExifReader(filePath))
-                            {
-                                reader.GetTagValue(ExifTags.DateTimeDigitized, out datePictureTaken);
-                                reader.GetTagValue(ExifTags.Make, out cameraMaker);
-                                reader.GetTagValue(ExifTags.Model, out cameraModel);
-                                reader.GetTagValue(ExifTags.PixelXDimension, out width);
-                                reader.GetTagValue(ExifTags.PixelYDimension, out height);
-                            }
-                        }
-                        catch
-                        {
-                            Console.WriteLine(
-                                $"        unable to read exif information:{filePath}");
-                            log.Error($"unable to read exif information:{filePath}");
-                        }
-
+                        long fileSize;
                         using (var file = File.OpenRead(filePath))
                         {
                             fileSize = file.Length;
                         }
 
-                        var picture = new Picture
+                        var ufile = new UFile
                         {
                             Name = Path.GetFileNameWithoutExtension(fileName),
-                            Path = filePath,
-                            DateTaken = datePictureTaken,
-                            CameraMaker = cameraMaker,
-                            CameraModel = cameraModel,
                             Extension = fileExtension,
-                            Height = (int) height,
-                            Width = (int) width,
-                            FileSize = fileSize,
+                            Size = fileSize,
+                            CreationDate = File.GetLastWriteTime(filePath),
                             Hash = hash,
-                            DirectoryName = directoryName
+                            Path = Path.GetDirectoryName(filePath)
                         };
 
+                        Console.WriteLine($"        name:{ufile.Name}, extension:{ufile.Extension}, size:{GetSizeString(ufile.Size)}, creationDate:{ufile.CreationDate.ToShortDateString()}, hash:{ufile.Hash}, path:{ufile.Path}");
+
                         fileCount += 1;
-                        pictureRepository.Create(picture);
+                        //pictureRepository.Create(picture);
                     }
 
-                    unitOfWork.SaveChanges();
+                    //unitOfWork.SaveChanges();
                 }
 
                 directories.AddRange(Directory.GetDirectories(directories[i]));
